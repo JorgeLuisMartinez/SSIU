@@ -1,4 +1,11 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
-@Module({})
+import { SpadminController } from './controllers/spadmin.controller';
+import { SpadminService } from './services/spadmin.service';
+
+@Module({
+  controllers: [SpadminController],
+  providers: [SpadminService]
+})
 export class SpadminModule {}
