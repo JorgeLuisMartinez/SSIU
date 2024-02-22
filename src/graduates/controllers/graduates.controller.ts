@@ -18,6 +18,11 @@ export class GraduatesController {
     return this.graduatesService.getHello();
   }
 
+  @Get('validate')
+  validatorRute() {
+    return this.graduatesService.validate();
+  }
+
   @Public()
   @Get('graduatepublic')
   getPrueba() {

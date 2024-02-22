@@ -17,7 +17,6 @@ export class UsersService {
     ) {}
 
   findAll() {
-    console.log('entro');
     return this.userRepo.find();
   }
 

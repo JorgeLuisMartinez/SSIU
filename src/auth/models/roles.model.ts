@@ -1,9 +1,9 @@
 export enum Role{
   GRADUATE = 'graduate',
   ADMIN = 'admin',
-  SPADMIN = 'spadmin',
+  SPADMIN = 'superadmin',
   TEACHER = 'teacher',
   EMPLOYER = 'employer',
-  QUALITY_LEADER = 'quality_leader',
-  QUALITY_INSTITUTIONAL = 'quality_institutional',
+  QUALITY_LEADER = 'qualityleader',
+  QUALITY_INSTITUTIONAL = 'qualityinstitutional',
 }
