@@ -6,6 +6,10 @@ export class GraduatesService {
     return 'hello world';
   }
 
+  validate() {
+    return 1;
+  }
+
   getPrueba() {
     return 'prueba';
   }
