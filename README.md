@@ -27,8 +27,8 @@ TYPEORM_MIGRATIONS = src/database/migrations/*.ts
 TYPEORM_MIGRATIONS_DIR = src/database/migrations
 TYPEORM_MIGRATIONS_TABLE_NAME = migrations
 
-JWT_SECRET=Gatito
-JWT_ACCESS_TOKEN_EXPIRATION_TIME=10s
+JWT_SECRET=RbwJ?Es$t8P3ua$HbQsna@%@xJ4ep@
+JWT_ACCESS_TOKEN_EXPIRATION_TIME=10d
 ```
 ### Correr el proyecto
 - Ejecutar el comando** npm run start:dev** para ejecutar el proyecto.

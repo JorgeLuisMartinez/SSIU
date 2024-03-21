@@ -20,7 +20,7 @@ import config from './../config';
         return {
           secret: configService.jwtSecret,
           signOptions: {
-            expiresIn: '10d',
+            expiresIn: process.env.JWT_ACCESS_TOKEN_EXPIRATION_TIME,
           },
         }
       },
