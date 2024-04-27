@@ -14,8 +14,8 @@ export default new DataSource({
   host: configService.get('DB_HOST'),
   synchronize: false,
   logging: true,
-  entities: ['src/*/*/*.entity.ts'],
-  migrations: ['src/database/migrations/*.ts'],
+  entities: ['src/*/*/*/*.entity.ts'],
+  migrations: ['src/modules/database/migrations/*.ts'],
   ssl: {
     rejectUnauthorized: false
   },

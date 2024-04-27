@@ -17,11 +17,20 @@ export class User {
   @Column({type: 'integer', unique: true})
   dni: number;
 
+  @Column({type: 'integer'})
+  dni_type_id: number;
+
+  @Column({type: 'integer'})
+  gender_id: number;
+
   @Column({type: 'integer', unique: true})
   phone_number: number;
 
   @Column({type: 'varchar', length: '255', unique: true})
   email: string;
+
+  @Column({type: 'varchar', length: '255', unique: true})
+  alt_email: string;
 
   @Exclude()
   @Column({type: 'varchar'})
