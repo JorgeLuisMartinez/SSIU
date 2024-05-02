@@ -16,7 +16,4 @@ export default new DataSource({
   logging: true,
   entities: ['src/*/*/*/*.entity.ts'],
   migrations: ['src/modules/database/migrations/*.ts'],
-  ssl: {
-    rejectUnauthorized: false
-  },
 });
