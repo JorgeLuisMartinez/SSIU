@@ -1,10 +1,9 @@
-import { Controller, Req, Post, UseGuards, Body, Res } from '@nestjs/common';
+import { Controller, Req, Post, UseGuards} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { Request, Response } from 'express';
+import { Request } from 'express';
 
 import { AuthService } from './../services/auth.service';
 import { User } from './../../users/entities/user.entity';
-import { log } from 'console';
 
 @Controller('auth')
 export class AuthController {
@@ -21,6 +20,5 @@ export class AuthController {
     else{
       return JSON.stringify(user);
     }
-    
   }
 }
