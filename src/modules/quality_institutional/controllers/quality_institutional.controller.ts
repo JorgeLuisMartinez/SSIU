@@ -11,8 +11,9 @@ import { Role } from './../../auth/models/roles.model';
 @Roles(Role.QUALITY_INSTITUTIONAL)
 @Controller('quality-institutional')
 export class QualityInstitutionalController {
-
-  constructor(private qualityInstitutionalService: QualityInstitutionalService) {}
+  constructor(
+    private qualityInstitutionalService: QualityInstitutionalService,
+  ) {}
 
   @Get()
   getHello() {

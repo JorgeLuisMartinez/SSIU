@@ -5,6 +5,6 @@ import { AdminController } from './controllers/admin.controller';
 
 @Module({
   controllers: [AdminController],
-  providers: [AdminService]
+  providers: [AdminService],
 })
 export class AdminModule {}

@@ -6,6 +6,6 @@ import { QualityInstitutionalService } from './services/quality-institutional.se
 
 @Module({
   controllers: [QualityInstitutionalController],
-  providers: [QualityInstitutionalService]
+  providers: [QualityInstitutionalService],
 })
 export class QualityInstitutionalModule {}

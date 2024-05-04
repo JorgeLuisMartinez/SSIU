@@ -41,8 +41,6 @@ import config from './config/config';
     QualityInstitutionalModule,
   ],
   controllers: [AppController],
-  providers: [
-    AppService,
-  ],
+  providers: [AppService],
 })
 export class AppModule {}

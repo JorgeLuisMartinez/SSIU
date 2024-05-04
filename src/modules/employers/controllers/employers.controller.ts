@@ -11,7 +11,6 @@ import { Role } from '../../auth/models/roles.model';
 @Roles(Role.EMPLOYER)
 @Controller('employers')
 export class EmployersController {
-
   constructor(private employersService: EmployersService) {}
 
   @Get()
@@ -24,5 +23,4 @@ export class EmployersController {
   getPrueba() {
     return this.employersService.getPrueba();
   }
-
 }

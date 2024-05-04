@@ -11,7 +11,6 @@ import { Role } from './../../auth/models/roles.model';
 @Roles(Role.ADMIN)
 @Controller('admin')
 export class AdminController {
-
   constructor(private adminService: AdminService) {}
 
   @Get()

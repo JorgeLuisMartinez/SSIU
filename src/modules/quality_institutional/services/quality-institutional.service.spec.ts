@@ -9,7 +9,9 @@ describe('QualityInstitutionalService', () => {
       providers: [QualityInstitutionalService],
     }).compile();
 
-    service = module.get<QualityInstitutionalService>(QualityInstitutionalService);
+    service = module.get<QualityInstitutionalService>(
+      QualityInstitutionalService,
+    );
   });
 
   it('should be defined', () => {

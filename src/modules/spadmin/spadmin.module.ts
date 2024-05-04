@@ -6,6 +6,6 @@ import { SpadminService } from './services/spadmin.service';
 
 @Module({
   controllers: [SpadminController],
-  providers: [SpadminService]
+  providers: [SpadminService],
 })
 export class SpadminModule {}

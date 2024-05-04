@@ -5,7 +5,6 @@ import * as bcrypt from 'bcrypt';
 import { UsersService } from './../../users/services/users.service';
 import { User } from './../../users/entities/user.entity';
 import { PayloadToken } from './../models/token.model';
-import { Response } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -23,8 +22,7 @@ export class AuthService {
       } else {
         return { error: 'La contraseña proporcionada es incorrecta' };
       }
-    }
-    else{
+    } else {
       return { error: 'El correo electrónico no está registrado' };
     }
     return null;
@@ -32,7 +30,7 @@ export class AuthService {
 
   async genarateJWT(user: User) {
     const payload: PayloadToken = {
-      role: user.role,
+      role: user.role.toString(),
       sub: user.id,
     };
     return {

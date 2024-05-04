@@ -1,34 +1,43 @@
-import { Injectable, NotFoundException, Inject } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, In } from 'typeorm';
 import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
 
-import { User } from '../entities/user.entity'
+import { User } from '../entities/user.entity';
+import { Gender } from '../entities/gender.entity';
+import { DniType } from '../entities/dniType.entity';
+import { Role } from '../entities/role.entity';
 import { CreateUserDto, UpdateUserDto } from '../dtos/user.dto';
-import { log } from 'console';
 
 @Injectable()
 export class UsersService {
-
   constructor(
     private configService: ConfigService,
-    @InjectRepository(User) private userRepo:Repository<User>,
-    ) {}
+    @InjectRepository(User) private userRepo: Repository<User>,
+    @InjectRepository(Gender) private genderRepo: Repository<Gender>,
+    @InjectRepository(DniType) private dniTypeRepo: Repository<DniType>,
+    @InjectRepository(Role) private roleRepo: Repository<Role>,
+  ) {}
 
   findAll() {
-    return this.userRepo.find();
+    return this.userRepo.find({
+      relations: ['role', 'gender', 'dni_type'],
+    });
   }
 
   async findOne(id: number) {
-    const user = await this.userRepo.findOneBy({ id });
+    const user = await this.userRepo.findOne({
+      where: { id: id },
+      relations: ['role', 'gender', 'dni_type'],
+    });
     if (!user) {
       throw new NotFoundException(`User #${id} not found`);
     }
     return user;
   }
 
-  findByEmail(email: string){
+  findByEmail(email: string) {
     return this.userRepo.findOne({ where: { email } });
   }
 
@@ -36,6 +45,23 @@ export class UsersService {
     const newUser = this.userRepo.create(data);
     const hashPassword = await bcrypt.hash(newUser.password, 10);
     newUser.password = hashPassword;
+    if (data.genderId) {
+      const gender = await this.genderRepo.findOne({
+        where: { id: data.genderId },
+      });
+      newUser.gender = gender;
+    }
+    if (data.dniTypeId) {
+      const dniType = await this.dniTypeRepo.findOne({
+        where: { id: data.dniTypeId },
+      });
+      newUser.dni_type = dniType;
+    }
+
+    if (data.rolesId) {
+      const roles = await this.roleRepo.findBy({ id: In(data.rolesId) });
+      newUser.role = roles;
+    }
     return this.userRepo.save(newUser);
   }
 
@@ -49,8 +75,6 @@ export class UsersService {
     if (!this.findOne(id)) {
       throw new NotFoundException(`User #${id} not found`);
     }
-    return this.userRepo.delete(id)
+    return this.userRepo.delete(id);
   }
-
-
 }

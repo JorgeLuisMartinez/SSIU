@@ -11,8 +11,8 @@ export default registerAs('config', () => {
       dbPassword: process.env.DB_PASS,
       dbHost: process.env.DB_HOST,
       dbPort: parseInt(process.env.DB_PORT, 10),
-      dbName: process.env.DB_NAME
+      dbName: process.env.DB_NAME,
     },
-    jwtSecret: process.env.JWT_SECRET
+    jwtSecret: process.env.JWT_SECRET,
   };
 });

@@ -15,18 +15,18 @@ import config from '../../config/config';
     UsersModule,
     PassportModule,
     JwtModule.registerAsync({
-      inject:[config.KEY],
-      useFactory: (configService: ConfigType<typeof config>)=> {
+      inject: [config.KEY],
+      useFactory: (configService: ConfigType<typeof config>) => {
         return {
           secret: configService.jwtSecret,
           signOptions: {
             expiresIn: process.env.JWT_ACCESS_TOKEN_EXPIRATION_TIME,
           },
-        }
+        };
       },
-    })
+    }),
   ],
   providers: [AuthService, LocalStrategy, JwtStrategy],
-  controllers: [AuthController]
+  controllers: [AuthController],
 })
 export class AuthModule {}

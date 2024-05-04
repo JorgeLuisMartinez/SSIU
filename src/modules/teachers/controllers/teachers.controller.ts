@@ -11,7 +11,6 @@ import { Role } from '../../auth/models/roles.model';
 @Roles(Role.TEACHER)
 @Controller('teachers')
 export class TeachersController {
-
   constructor(private teachersService: TeachersService) {}
 
   @Get()

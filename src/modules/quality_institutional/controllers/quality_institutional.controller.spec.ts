@@ -9,7 +9,9 @@ describe('QualityInstitutionalController', () => {
       controllers: [QualityInstitutionalController],
     }).compile();
 
-    controller = module.get<QualityInstitutionalController>(QualityInstitutionalController);
+    controller = module.get<QualityInstitutionalController>(
+      QualityInstitutionalController,
+    );
   });
 
   it('should be defined', () => {

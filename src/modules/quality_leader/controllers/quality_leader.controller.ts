@@ -11,7 +11,6 @@ import { Role } from './../../auth/models/roles.model';
 @Roles(Role.QUALITY_LEADER)
 @Controller('quality-leader')
 export class QualityLeaderController {
-
   constructor(private qualityLeaderService: QualityLeaderService) {}
 
   @Get()

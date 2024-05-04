@@ -1,4 +1,9 @@
-import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  CanActivate,
+  ExecutionContext,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Observable } from 'rxjs';
 
@@ -8,7 +13,6 @@ import { Role } from '../models/roles.model';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
-
   constructor(private reflector: Reflector) {}
 
   canActivate(
@@ -25,7 +29,7 @@ export class RolesGuard implements CanActivate {
 
     const isAuth = roles.some((role) => role === user.role);
     if (!isAuth) {
-      throw new UnauthorizedException('your role dont have permissions')
+      throw new UnauthorizedException('your role dont have permissions');
     }
     return isAuth;
   }
