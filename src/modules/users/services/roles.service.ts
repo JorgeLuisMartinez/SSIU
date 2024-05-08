@@ -16,7 +16,7 @@ export class GendersService {
   findOne(id: number) {
     const user = this.roleRepo.findOne({
       where: { id: id },
-      relations: ['user'],
+      // relations: ['user'],
     });
     if (!user) {
       throw new NotFoundException(`Role #${id} not found`);

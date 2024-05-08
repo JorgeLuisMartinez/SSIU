@@ -37,6 +37,21 @@ export class UsersService {
     return user;
   }
 
+  async validateUserRegister(data: UpdateUserDto) {
+    const userRegister = await this.findByEmail(data.email);
+    if (
+      data.dniTypeId == userRegister.dni_type.id &&
+      data.dni == userRegister.dni
+    ) {
+      const hashPassword = await bcrypt.compare(
+        userRegister.dni.toString(),
+        userRegister.password,
+      );
+      return `mensaje de exito ${hashPassword}`;
+    }
+    return 'mensaje de error';
+  }
+
   findByEmail(email: string) {
     return this.userRepo.findOne({
       where: { email },
@@ -46,7 +61,7 @@ export class UsersService {
 
   async create(data: CreateUserDto) {
     const newUser = this.userRepo.create(data);
-    const hashPassword = await bcrypt.hash(newUser.password, 10);
+    const hashPassword = await bcrypt.hash(newUser.dni.toString(), 10);
     newUser.password = hashPassword;
     if (data.genderId) {
       const gender = await this.genderRepo.findOne({

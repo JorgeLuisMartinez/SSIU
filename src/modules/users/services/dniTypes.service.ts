@@ -6,7 +6,7 @@ import { DniType } from '../entities/dniType.entity';
 import { CreateDniTypeDto, UpdateDniTypeDto } from '../dtos/dniType.dto';
 
 @Injectable()
-export class GendersService {
+export class DniTypesService {
   constructor(
     @InjectRepository(DniType) private dniTypeRepo: Repository<DniType>,
   ) {}
@@ -18,7 +18,7 @@ export class GendersService {
   findOne(id: number) {
     const user = this.dniTypeRepo.findOne({
       where: { id: id },
-      relations: ['user'],
+      // relations: ['user'],
     });
     if (!user) {
       throw new NotFoundException(`Dni Type #${id} not found`);

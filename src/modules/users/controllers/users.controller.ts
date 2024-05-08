@@ -28,6 +28,11 @@ export class UsersController {
     return this.usersService.findOne(id);
   }
 
+  @Put('signUp')
+  putValidateUserRegister(@Body() payload: UpdateUserDto) {
+    return this.usersService.validateUserRegister(payload);
+  }
+
   @Post()
   create(@Body() payload: CreateUserDto) {
     return this.usersService.create(payload);
