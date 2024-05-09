@@ -6,7 +6,7 @@ import { Role } from '../entities/role.entity';
 import { CreateRolesDto, UpdateRolesDto } from '../dtos/roles.dto';
 
 @Injectable()
-export class GendersService {
+export class RolesService {
   constructor(@InjectRepository(Role) private roleRepo: Repository<Role>) {}
 
   findAll() {

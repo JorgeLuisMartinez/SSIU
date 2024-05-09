@@ -5,11 +5,13 @@ import {
   ManyToOne,
   ManyToMany,
   JoinTable,
+  JoinColumn,
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import { Gender } from './gender.entity';
 import { DniType } from './dniType.entity';
 import { Role } from './role.entity';
+import { Status } from './status.entity';
 
 // import DateAt from '../../database/globalEntities/basic.entity';
 
@@ -40,11 +42,17 @@ export class User {
   @Column({ type: 'varchar' })
   password: string;
 
+  @ManyToOne(() => Status, (status) => status.user)
+  @JoinColumn({ name: 'status_id' })
+  status: Status;
+
   @ManyToOne(() => Gender, (gender) => gender.user) // Relación ManyToOne con la entidad Gender
-  gender: Gender; // Propiedad que mantiene la relación con Gender
+  @JoinColumn({ name: 'gender_id' })
+  gender: Gender; // Propiedad que mantiene la relación con Gender
 
   @ManyToOne(() => DniType, (dniType) => dniType.user) // Relación ManyToOne con la entidad Gender
-  dni_type: DniType; // Propiedad que mantiene la relación con Gender
+  @JoinColumn({ name: 'dniType_id' })
+  dni_type: DniType; // Propiedad que mantiene la relación con Gender
 
   @ManyToMany(() => Role, (role) => role.user)
   @JoinTable({
@@ -56,5 +64,5 @@ export class User {
       name: 'role_id',
     },
   })
-  role: Role[]; // Propiedad que mantiene la relación con Gender
+  role: Role[]; // Propiedad que mantiene la relación con Gender
 }

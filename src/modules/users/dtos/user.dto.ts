@@ -4,7 +4,6 @@ import {
   IsNotEmpty,
   IsString,
   IsNumber,
-  IsEmpty,
   IsArray,
 } from 'class-validator';
 
@@ -19,8 +18,6 @@ export class CreateUserDto {
   readonly alt_email: string;
 
   @ApiProperty({ description: 'esta es la contraseña del usuario' })
-  @IsString()
-  @IsNotEmpty()
   readonly password: string;
 
   @ApiProperty({ description: '' })
@@ -47,6 +44,11 @@ export class CreateUserDto {
   @IsNumber()
   @IsNotEmpty()
   readonly dniTypeId: number;
+
+  @ApiProperty({ description: '' })
+  @IsNumber()
+  @IsNotEmpty()
+  readonly statusId: number;
 
   @ApiProperty({ description: '' })
   @IsNumber()
