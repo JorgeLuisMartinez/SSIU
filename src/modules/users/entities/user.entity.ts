@@ -14,7 +14,6 @@ import { Role } from './role.entity';
 import { Status } from './status.entity';
 
 // import DateAt from '../../database/globalEntities/basic.entity';
-
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()

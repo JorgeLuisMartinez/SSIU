@@ -4,6 +4,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 // Controllers
 import { UsersController } from './controllers/users.controller';
 import { DniTypesController } from './controllers/dni-types.controller';
+import { StatusController } from './controllers/status.controller';
+import { GenderController } from './controllers/gender.controller';
 //Services
 import { UsersService } from './services/users.service';
 import { DniTypesService } from './services/dniTypes.service';
@@ -19,7 +21,12 @@ import { GendersService } from './services/genders.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User, Role, Gender, DniType, Status])],
-  controllers: [UsersController, DniTypesController],
+  controllers: [
+    UsersController,
+    DniTypesController,
+    StatusController,
+    GenderController,
+  ],
   providers: [
     UsersService,
     DniTypesService,
