@@ -42,16 +42,28 @@ export class UsersService {
 
   async validateUserRegister(data: UpdateUserDto) {
     const userRegister = await this.findByEmail(data.email);
-    if (
-      data.dniTypeId == userRegister.dni_type.id &&
-      data.dni == userRegister.dni &&
-      userRegister.status.id == 2
-    ) {
-      userRegister.status.id = 1;
-      await this.update(userRegister.id, userRegister);
-      return userRegister.name.charAt(0).toUpperCase() + userRegister.dni;
+    if (userRegister) {
+      if (
+        data.dniTypeId == userRegister.dni_type.id &&
+        data.dni == userRegister.dni &&
+        userRegister.status.id == 3
+      ) {
+        userRegister.status.id = 1;
+        await this.update(userRegister.id, userRegister);
+        return { success: 'Usuario Activado correctamente' };
+      }
+      if (
+        data.dniTypeId != userRegister.dni_type.id ||
+        data.dni != userRegister.dni
+      ) {
+        return {
+          error:
+            'El numero o el tipo de documento ingresado no coincide con el correo',
+        };
+      }
+    } else {
+      return { error: 'El correo electrónico no está registrado' };
     }
-    return 'mensaje de error';
   }
 
   findByEmail(email: string) {
