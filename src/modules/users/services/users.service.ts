@@ -9,6 +9,7 @@ import { Gender } from '../entities/gender.entity';
 import { DniType } from '../entities/dniType.entity';
 import { Role } from '../entities/role.entity';
 import { Status } from '../entities/status.entity';
+import { Geographic_location } from '../entities/geographic_location.entity';
 
 import { CreateUserDto, UpdateUserDto } from '../dtos/user.dto';
 
@@ -21,18 +22,19 @@ export class UsersService {
     @InjectRepository(DniType) private dniTypeRepo: Repository<DniType>,
     @InjectRepository(Role) private roleRepo: Repository<Role>,
     @InjectRepository(Status) private statusRepo: Repository<Status>,
+    @InjectRepository(Geographic_location) private geographic_locationRepo: Repository<Geographic_location>,
   ) {}
 
   findAll() {
     return this.userRepo.find({
-      relations: ['role', 'gender', 'dni_type', 'status'],
+      relations: ['role', 'gender', 'dni_type', 'status','geographic_location'],
     });
   }
 
   async findOne(id: number) {
     const user = await this.userRepo.findOne({
       where: { id: id },
-      relations: ['role', 'gender', 'dni_type', 'status'],
+      relations: ['role', 'gender', 'dni_type', 'status','geographic_location'],
     });
     if (!user) {
       throw new NotFoundException(`User #${id} not found`);
@@ -69,7 +71,7 @@ export class UsersService {
   findByEmail(email: string) {
     return this.userRepo.findOne({
       where: { email },
-      relations: ['role', 'gender', 'dni_type', 'status'],
+      relations: ['role', 'gender', 'dni_type', 'status','geographic_location'],
     });
   }
 
@@ -102,6 +104,13 @@ export class UsersService {
       });
       newUser.status = status;
     }
+    if (data.geographic_locationId) {
+      const geographic_location = await this.geographic_locationRepo.findOne({
+        where: { id: data.geographic_locationId },
+      });
+      newUser.geographic_location = geographic_location;
+    }
+
     return this.userRepo.save(newUser);
   }
 
@@ -129,6 +138,13 @@ export class UsersService {
       });
       user.status = status;
     }
+    if (changes.geographic_locationId) {
+      const geographicLocation = await this.geographic_locationRepo.findOne({
+        where: { id: changes.geographic_locationId },
+      });
+      user.geographic_location = geographicLocation;
+    }
+
     this.userRepo.merge(user, changes);
     return this.userRepo.save(user);
   }
