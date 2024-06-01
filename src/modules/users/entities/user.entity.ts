@@ -12,7 +12,6 @@ import { Gender } from './gender.entity';
 import { DniType } from './dniType.entity';
 import { Role } from './role.entity';
 import { Status } from './status.entity';
-import { Geographic_location } from './geographic_location.entity';
 
 // import DateAt from '../../database/globalEntities/basic.entity';
 @Entity()
@@ -49,10 +48,6 @@ export class User {
   @ManyToOne(() => Gender, (gender) => gender.user) // Relación ManyToOne con la entidad Gender
   @JoinColumn({ name: 'gender_id' })
   gender: Gender; // Propiedad que mantiene la relación con Gender
-
-  @ManyToOne(() => Geographic_location, (geographic_location) => geographic_location.user)
-  @JoinColumn({ name: 'geographic_location_id' })
-  geographic_location: Geographic_location;
 
   @ManyToOne(() => DniType, (dniType) => dniType.user)
   @JoinColumn({ name: 'dniType_id' })

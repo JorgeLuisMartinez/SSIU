@@ -6,32 +6,28 @@ import { UsersController } from './controllers/users.controller';
 import { DniTypesController } from './controllers/dni-types.controller';
 import { StatusController } from './controllers/status.controller';
 import { GenderController } from './controllers/gender.controller';
-import { Geographic_locationController } from './controllers/geographic-location.controller';
 //Services
 import { UsersService } from './services/users.service';
 import { DniTypesService } from './services/dniTypes.service';
 import { StatusService } from './services/status.service';
 import { RolesService } from './services/roles.service';
 import { GendersService } from './services/genders.service';
-import { Geographic_locationService } from './services/geographic_location.service';
 //Entities
 import { User } from './entities/user.entity';
 import { Role } from './entities/role.entity';
 import { Gender } from './entities/gender.entity';
 import { DniType } from './entities/dniType.entity';
 import { Status } from './entities/status.entity';
-import { Geographic_location } from './entities/geographic_location.entity';
 
 
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, Role, Gender, DniType, Status, Geographic_location])],
+  imports: [TypeOrmModule.forFeature([User, Role, Gender, DniType, Status])],
   controllers: [
     UsersController,
     DniTypesController,
     StatusController,
     GenderController,
-    Geographic_locationController,
   ],
   providers: [
     UsersService,
@@ -39,7 +35,6 @@ import { Geographic_location } from './entities/geographic_location.entity';
     StatusService,
     RolesService,
     GendersService,
-    Geographic_locationService,
   ],
   exports: [UsersService],
 })

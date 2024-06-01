@@ -56,11 +56,6 @@ export class CreateUserDto {
   readonly genderId: number;
 
   @ApiProperty({ description: '' })
-  @IsNumber()
-  @IsNotEmpty()
-  readonly geographic_locationId: number;
-
-  @ApiProperty({ description: '' })
   @IsArray()
   @IsNotEmpty()
   readonly rolesId: number[];
