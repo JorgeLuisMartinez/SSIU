@@ -6,12 +6,14 @@ import {
   ManyToMany,
   JoinTable,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import { Gender } from './gender.entity';
 import { DniType } from './dniType.entity';
 import { Role } from './role.entity';
 import { Status } from './status.entity';
+import { EmploymentData } from './employmentData.entity';
 
 // import DateAt from '../../database/globalEntities/basic.entity';
 @Entity()
@@ -52,6 +54,9 @@ export class User {
   @ManyToOne(() => DniType, (dniType) => dniType.user)
   @JoinColumn({ name: 'dniType_id' })
   dni_type: DniType;
+
+  @OneToMany(() => EmploymentData, (employmnetData) => employmnetData.user)
+  employmnetData: EmploymentData[];
 
   @ManyToMany(() => Role, (role) => role.user)
   @JoinTable({

@@ -1,4 +1,9 @@
-import { PrimaryGeneratedColumn, Column, Entity, ManyToMany } from 'typeorm';
+import {
+  PrimaryGeneratedColumn,
+  Column,
+  Entity,
+  OneToMany,
+} from 'typeorm';
 import { User } from './user.entity';
 
 @Entity()
@@ -9,6 +14,6 @@ export class Status {
   @Column({ type: 'varchar', length: '50' })
   description: string;
 
-  @ManyToMany(() => User, (user) => user.status)
+  @OneToMany(() => User, (user) => user.status)
   user: User[];
 }
