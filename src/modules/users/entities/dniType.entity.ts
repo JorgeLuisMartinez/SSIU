@@ -9,6 +9,6 @@ export class DniType {
   @Column({ type: 'varchar', length: '50' })
   description: string;
 
-  @OneToMany(() => User, (user) => user.dni_type) // Relación OneToMany con la entidad User
-  user: User[]; // Propiedad que mantiene la relación con User
+  @OneToMany(() => User, (user) => user.dni_type)
+  user: User[];
 }

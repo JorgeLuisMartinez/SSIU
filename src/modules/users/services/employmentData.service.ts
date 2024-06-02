@@ -27,30 +27,64 @@ export class EmploymentDataService {
   }
 
   findOne(id: number) {
-    const user = this.employmentDataRepo.findOne({
+    const employmentData = this.employmentDataRepo.findOne({
       where: { id: id },
       relations: ['companySector', 'user'],
     });
-    if (!user) {
-      throw new NotFoundException(`Dni Type #${id} not found`);
+    if (!employmentData) {
+      throw new NotFoundException(`employmentData #${id} not found`);
     }
-    return user;
+    return employmentData;
   }
 
-  create(data: CreateEmploymentDataDto) {
-    const newStudyType = this.employmentDataRepo.create(data);
-    return this.employmentDataRepo.save(newStudyType);
+  async findByUser(id: number) {
+    //console.log('entro');
+    const user = await this.userRepo.findOne({
+      where: { id: id },
+    });
+
+    return this.employmentDataRepo.findOne({
+      where: { user: user },
+      relations: ['companySector'],
+    });
+  }
+
+  async create(data: CreateEmploymentDataDto) {
+    const newEmployment = this.employmentDataRepo.create(data);
+    if (data.companySectorId) {
+      const companySector = await this.companySectorRepo.findOne({
+        where: { id: data.companySectorId },
+      });
+      //console.log(companySector);
+      newEmployment.companySector = companySector;
+    }
+    if (data.userId) {
+      const user = await this.userRepo.findOne({
+        where: { id: data.userId },
+      });
+      //console.log(user);
+      newEmployment.user = user;
+    }
+    return this.employmentDataRepo.save(newEmployment);
   }
 
   async update(id: number, changes: UpdateEmploymentDataDto) {
-    const studyType = await this.employmentDataRepo.findOne({
-      where: { id: id },
-    });
-    this.employmentDataRepo.merge(studyType, changes);
-    return this.employmentDataRepo.save(studyType);
+    const employmentData = await this.findOne(id);
+    if (changes.companySectorId) {
+      const companySector = await this.companySectorRepo.findOne({
+        where: { id: changes.companySectorId },
+      });
+      employmentData.companySector = companySector;
+    }
+
+    this.employmentDataRepo.merge(employmentData, changes);
+    return this.employmentDataRepo.save(employmentData);
   }
 
   remove(id: number) {
+    if (!this.findOne(id)) {
+      throw new NotFoundException(`EmploymentData #${id} not found`);
+    }
     return this.employmentDataRepo.delete(id);
   }
 }

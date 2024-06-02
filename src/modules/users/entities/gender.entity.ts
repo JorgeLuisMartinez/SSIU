@@ -9,6 +9,6 @@ export class Gender {
   @Column({ type: 'varchar', length: '50' })
   description: string;
 
-  @OneToMany(() => User, (user) => user.gender) // Relación OneToMany con la entidad User
-  user: User[]; // Propiedad que mantiene la relación con User
+  @OneToMany(() => User, (user) => user.gender)
+  user: User[];
 }

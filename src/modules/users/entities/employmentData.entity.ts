@@ -6,10 +6,9 @@ import {
   JoinColumn,
 } from 'typeorm';
 
-import { CompanySector } from './companySector.entity';
 import { User } from './user.entity';
+import { CompanySector } from './companySector.entity';
 
-// import DateAt from '../../database/globalEntities/basic.entity';
 @Entity()
 export class EmploymentData {
   @PrimaryGeneratedColumn()
@@ -18,8 +17,8 @@ export class EmploymentData {
   @Column({ type: 'varchar', length: '255' })
   name: string;
 
-  @Column({ type: 'bigint', length: '50' })
-  phone: number;
+  @Column({ type: 'bigint' })
+  phone_number: number;
 
   @Column({ type: 'varchar', length: '255' })
   address: string;
@@ -30,7 +29,7 @@ export class EmploymentData {
   @Column({ type: 'varchar', length: '255', unique: true })
   email: string;
 
-  @Column({ type: 'varchar', length: '50', unique: true })
+  @Column({ type: 'varchar', length: '50' })
   nationality: string;
 
   @ManyToOne(
@@ -42,5 +41,5 @@ export class EmploymentData {
 
   @ManyToOne(() => User, (user) => user.employmnetData)
   @JoinColumn({ name: 'user_id' })
-  user: User[];
+  user: User;
 }

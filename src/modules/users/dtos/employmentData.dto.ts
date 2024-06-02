@@ -16,7 +16,7 @@ export class CreateEmploymentDataDto {
   @ApiProperty({ description: '' })
   @IsNumber()
   @IsNotEmpty()
-  readonly phone: number;
+  readonly phone_number: number;
 
   @ApiProperty({ description: '' })
   @IsString()

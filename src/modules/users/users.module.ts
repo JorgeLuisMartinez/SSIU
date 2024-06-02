@@ -9,6 +9,7 @@ import { GenderController } from './controllers/gender.controller';
 import { StudyTypesController } from './controllers/StudyType.controller';
 import { EmploymentDataController } from './controllers/employmentData.controller';
 import { CompanySectorController } from './controllers/companySector.controller';
+import { AcademicDataController } from './controllers/academicData.controller';
 //Services
 import { UsersService } from './services/users.service';
 import { DniTypesService } from './services/dniTypes.service';
@@ -18,15 +19,17 @@ import { GendersService } from './services/genders.service';
 import { StudyTypesService } from './services/studyTypes.service';
 import { EmploymentDataService } from './services/employmentData.service';
 import { CompanySectorService } from './services/companySector.service';
+import { AcademicDataService } from './services/academicData.service';
 //Entities
 import { User } from './entities/user.entity';
 import { Role } from './entities/role.entity';
 import { Gender } from './entities/gender.entity';
 import { DniType } from './entities/dniType.entity';
 import { Status } from './entities/status.entity';
-import { StudyTypes } from './entities/studyTypes.enitity';
+import { StudyTypes } from './entities/studyTypes.entity';
 import { EmploymentData } from './entities/employmentData.entity';
 import { CompanySector } from './entities/companySector.entity';
+import { AcademicData } from './entities/academicData.entity';
 
 @Module({
   imports: [
@@ -39,6 +42,7 @@ import { CompanySector } from './entities/companySector.entity';
       StudyTypes,
       EmploymentData,
       CompanySector,
+      AcademicData,
     ]),
   ],
   controllers: [
@@ -49,6 +53,7 @@ import { CompanySector } from './entities/companySector.entity';
     StudyTypesController,
     EmploymentDataController,
     CompanySectorController,
+    AcademicDataController,
   ],
   providers: [
     UsersService,
@@ -59,6 +64,7 @@ import { CompanySector } from './entities/companySector.entity';
     StudyTypesService,
     EmploymentDataService,
     CompanySectorService,
+    AcademicDataService,
   ],
   exports: [UsersService],
 })

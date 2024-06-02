@@ -1,6 +1,7 @@
 import { PrimaryGeneratedColumn, Column, Entity, OneToMany } from 'typeorm';
 
 import { EmploymentData } from './employmentData.entity';
+import { AcademicData } from './academicData.entity';
 
 @Entity()
 export class CompanySector {

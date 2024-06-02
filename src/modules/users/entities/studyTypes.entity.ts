@@ -1,5 +1,7 @@
 import { PrimaryGeneratedColumn, Column, Entity, OneToMany } from 'typeorm';
 
+import { AcademicData } from './academicData.entity';
+
 @Entity()
 export class StudyTypes {
   @PrimaryGeneratedColumn()
@@ -8,6 +10,6 @@ export class StudyTypes {
   @Column({ type: 'varchar', length: '255' })
   description: string;
 
-  // @OneToMany(() => User, (user) => user.dni_type) // Relación OneToMany con la entidad User
-  // user: User[]; // Propiedad que mantiene la relación con User
+  @OneToMany(() => AcademicData, (academicData) => academicData.studyType)
+  academicData: AcademicData[];
 }

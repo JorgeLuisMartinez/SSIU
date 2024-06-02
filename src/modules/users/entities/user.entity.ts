@@ -14,6 +14,7 @@ import { DniType } from './dniType.entity';
 import { Role } from './role.entity';
 import { Status } from './status.entity';
 import { EmploymentData } from './employmentData.entity';
+import { AcademicData } from './academicData.entity';
 
 // import DateAt from '../../database/globalEntities/basic.entity';
 @Entity()
@@ -57,6 +58,9 @@ export class User {
 
   @OneToMany(() => EmploymentData, (employmnetData) => employmnetData.user)
   employmnetData: EmploymentData[];
+
+  @OneToMany(() => AcademicData, (academicData) => academicData.user)
+  academicData: AcademicData[];
 
   @ManyToMany(() => Role, (role) => role.user)
   @JoinTable({

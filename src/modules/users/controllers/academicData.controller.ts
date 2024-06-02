@@ -9,15 +9,15 @@ import {
   ParseIntPipe,
 } from '@nestjs/common';
 
-import { EmploymentDataService } from '../services/employmentData.service';
+import { AcademicDataService } from '../services/academicData.service';
 import {
-  CreateEmploymentDataDto,
-  UpdateEmploymentDataDto,
-} from '../dtos/employmentData.dto';
+  CreateAcademicDataDto,
+  UpdateAcademicDataDto,
+} from '../dtos/academicData.dto';
 
-@Controller('employment-data')
-export class EmploymentDataController {
-  constructor(private employmentDataService: EmploymentDataService) {}
+@Controller('academic-data')
+export class AcademicDataController {
+  constructor(private employmentDataService: AcademicDataService) {}
 
   @Get()
   findAll() {
@@ -35,14 +35,14 @@ export class EmploymentDataController {
   }
 
   @Post()
-  create(@Body() payload: CreateEmploymentDataDto) {
+  create(@Body() payload: CreateAcademicDataDto) {
     return this.employmentDataService.create(payload);
   }
 
   @Put(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
-    @Body() payload: UpdateEmploymentDataDto,
+    @Body() payload: UpdateAcademicDataDto,
   ) {
     return this.employmentDataService.update(id, payload);
   }
