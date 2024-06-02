@@ -27,7 +27,7 @@ export class AcademicData {
   degree_date: Date;
 
   @ManyToOne(() => StudyTypes, (studyTypes) => studyTypes.academicData)
-  @JoinColumn({ name: 'company_sector_id' }) //study_type_id
+  @JoinColumn({ name: 'study_type_id' })
   studyType: StudyTypes;
 
   @ManyToOne(() => User, (user) => user.academicData)
