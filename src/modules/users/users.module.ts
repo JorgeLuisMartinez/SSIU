@@ -10,6 +10,8 @@ import { StudyTypesController } from './controllers/StudyType.controller';
 import { EmploymentDataController } from './controllers/employmentData.controller';
 import { CompanySectorController } from './controllers/companySector.controller';
 import { AcademicDataController } from './controllers/academicData.controller';
+import { IndicatorController } from './controllers/indicator.controller';
+import { VariableController } from './controllers/variable.controller';
 //Services
 import { UsersService } from './services/users.service';
 import { DniTypesService } from './services/dniTypes.service';
@@ -20,6 +22,8 @@ import { StudyTypesService } from './services/studyTypes.service';
 import { EmploymentDataService } from './services/employmentData.service';
 import { CompanySectorService } from './services/companySector.service';
 import { AcademicDataService } from './services/academicData.service';
+import { IndicatorService } from './services/indicator.service';
+import { VariableService } from './services/variable.service';
 //Entities
 import { User } from './entities/user.entity';
 import { Role } from './entities/role.entity';
@@ -30,6 +34,8 @@ import { StudyTypes } from './entities/studyTypes.entity';
 import { EmploymentData } from './entities/employmentData.entity';
 import { CompanySector } from './entities/companySector.entity';
 import { AcademicData } from './entities/academicData.entity';
+import { Indicator } from './entities/indicator.entity';
+import { Variable } from './entities/variable.entity';
 
 @Module({
   imports: [
@@ -43,6 +49,8 @@ import { AcademicData } from './entities/academicData.entity';
       EmploymentData,
       CompanySector,
       AcademicData,
+      Indicator,
+      Variable,
     ]),
   ],
   controllers: [
@@ -54,6 +62,8 @@ import { AcademicData } from './entities/academicData.entity';
     EmploymentDataController,
     CompanySectorController,
     AcademicDataController,
+    IndicatorController,
+    VariableController,
   ],
   providers: [
     UsersService,
@@ -65,6 +75,8 @@ import { AcademicData } from './entities/academicData.entity';
     EmploymentDataService,
     CompanySectorService,
     AcademicDataService,
+    IndicatorService,
+    VariableService,
   ],
   exports: [UsersService],
 })
