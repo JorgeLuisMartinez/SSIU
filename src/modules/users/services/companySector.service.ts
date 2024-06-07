@@ -22,7 +22,6 @@ export class CompanySectorService {
   findOne(id: number) {
     const user = this.companySectorRepo.findOne({
       where: { id: id },
-      // relations: ['user'],
     });
     if (!user) {
       throw new NotFoundException(`Dni Type #${id} not found`);

@@ -39,7 +39,7 @@ export class IndicatorService {
         where: { id: data.variableId },
       });
       //console.log(studyType);
-      newIndicator.variables = variable;
+      newIndicator.variable = variable;
     }
 
     return this.indicatorRepo.save(newIndicator);
@@ -52,7 +52,7 @@ export class IndicatorService {
       const variable = await this.variableRepo.findOne({
         where: { id: changes.variableId },
       });
-      indicator.variables = variable;
+      indicator.variable = variable;
     }
     this.indicatorRepo.merge(indicator, changes);
     return this.indicatorRepo.save(indicator);

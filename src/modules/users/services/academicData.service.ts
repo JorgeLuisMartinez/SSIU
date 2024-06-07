@@ -38,11 +38,12 @@ export class AcademicDataService {
   }
 
   async findByUser(id: number) {
-    //console.log('entro');
     const user = await this.userRepo.findOne({
       where: { id: id },
     });
-
+    if (!user) {
+      throw new NotFoundException(`user #${id} not found`);
+    }
     return this.academicDataRepo.findOne({
       where: { user: user },
       relations: ['studyType'],

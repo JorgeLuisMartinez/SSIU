@@ -15,4 +15,12 @@ describe('SpadminService', () => {
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
+
+  it('should return "hello world" from getHello', () => {
+    expect(service.getHello()).toBe('hello world');
+  });
+
+  it('should return "prueba" from getPrueba', () => {
+    expect(service.getPrueba()).toBe('prueba');
+  });
 });

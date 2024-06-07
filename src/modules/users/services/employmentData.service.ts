@@ -26,8 +26,8 @@ export class EmploymentDataService {
     });
   }
 
-  findOne(id: number) {
-    const employmentData = this.employmentDataRepo.findOne({
+  async findOne(id: number) {
+    const employmentData = await this.employmentDataRepo.findOne({
       where: { id: id },
       relations: ['companySector', 'user'],
     });
@@ -38,11 +38,12 @@ export class EmploymentDataService {
   }
 
   async findByUser(id: number) {
-    //console.log('entro');
     const user = await this.userRepo.findOne({
       where: { id: id },
     });
-
+    if (!user) {
+      throw new NotFoundException(`user #${id} not found`);
+    }
     return this.employmentDataRepo.findOne({
       where: { user: user },
       relations: ['companySector'],
@@ -55,14 +56,12 @@ export class EmploymentDataService {
       const companySector = await this.companySectorRepo.findOne({
         where: { id: data.companySectorId },
       });
-      //console.log(companySector);
       newEmployment.companySector = companySector;
     }
     if (data.userId) {
       const user = await this.userRepo.findOne({
         where: { id: data.userId },
       });
-      //console.log(user);
       newEmployment.user = user;
     }
     return this.employmentDataRepo.save(newEmployment);
@@ -81,10 +80,12 @@ export class EmploymentDataService {
     return this.employmentDataRepo.save(employmentData);
   }
 
-  remove(id: number) {
-    if (!this.findOne(id)) {
+  async remove(id: number) {
+    const employmentData = await this.findOne(id);
+    if (!employmentData) {
       throw new NotFoundException(`EmploymentData #${id} not found`);
     }
-    return this.employmentDataRepo.delete(id);
+    await this.employmentDataRepo.delete(id);
+    return;
   }
 }
