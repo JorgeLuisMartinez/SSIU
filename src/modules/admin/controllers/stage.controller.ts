@@ -10,51 +10,51 @@ import {
   UseGuards,
 } from '@nestjs/common';
 
-import { QuestionService } from '../services/question.service';
-import { CreateQuestionDto, UpdateQuestionDto } from '../dtos/questions.dto';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../../auth/guards/roles.guard';
 import { Roles } from '../../auth/decorators/roles.decorator';
 import { Role } from '../../auth/models/roles.model';
 import { Public } from '../../auth/decorators/public.decorator';
+import { StagesService } from '../services/stages.service';
+import { CreateStageDto, UpdateStageDto } from '../dtos/stages.dto';
 
 @UseGuards(JwtAuthGuard, RolesGuard)
-@Roles(Role.SPADMIN)
-@Controller('question')
-export class QuestionController {
-  constructor(private questionService: QuestionService) {}
+@Roles(Role.ADMIN)
+@Controller('stage')
+export class AcademicProgramsController {
+  constructor(private stagesService: StagesService) {}
 
   @Get()
   findAll() {
-    return this.questionService.findAll();
+    return this.stagesService.findAll();
   }
 
   @Get(':id')
   get(@Param('id', ParseIntPipe) id: number) {
-    return this.questionService.findOne(id);
+    return this.stagesService.findOne(id);
   }
 
   @Public()
-  @Get('by/:id')
-  getByIndicator(@Param('id', ParseIntPipe) id: number) {
-    return this.questionService.findByIndicator(id);
+  @Get('academic-program/:id')
+  getByAcademicProgram(@Param('id', ParseIntPipe) id: number) {
+    return this.stagesService.findByAcademicProgram(id);
   }
 
   @Post()
-  create(@Body() payload: CreateQuestionDto) {
-    return this.questionService.create(payload);
+  create(@Body() payload: CreateStageDto) {
+    return this.stagesService.create(payload);
   }
 
   @Put(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
-    @Body() payload: UpdateQuestionDto,
+    @Body() payload: UpdateStageDto,
   ) {
-    return this.questionService.update(id, payload);
+    return this.stagesService.update(id, payload);
   }
 
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
-    return this.questionService.remove(+id);
+    return this.stagesService.remove(+id);
   }
 }

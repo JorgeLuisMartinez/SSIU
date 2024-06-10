@@ -15,6 +15,9 @@ export class CreateUserDto {
   readonly email: string;
 
   @ApiProperty({ description: 'este es el email alternativo del usuario' })
+  @IsString()
+  @IsEmail()
+  @IsNotEmpty()
   readonly alt_email: string;
 
   @ApiProperty({ description: 'esta es la contraseña del usuario' })

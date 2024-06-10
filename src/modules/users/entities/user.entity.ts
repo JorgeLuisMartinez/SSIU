@@ -15,6 +15,9 @@ import { Role } from './role.entity';
 import { Status } from './status.entity';
 import { EmploymentData } from './employmentData.entity';
 import { AcademicData } from './academicData.entity';
+import {
+  AcademicPrograms
+} from '../../spadmin/entities/academicPrograms.entity';
 
 // import DateAt from '../../database/globalEntities/basic.entity';
 @Entity()
@@ -37,7 +40,7 @@ export class User {
   @Column({ type: 'varchar', length: '255', unique: true })
   email: string;
 
-  @Column({ type: 'varchar', length: '255', unique: true })
+  @Column({ type: 'varchar', length: '255', unique: true, nullable: true })
   alt_email: string;
 
   @Exclude()
@@ -61,6 +64,9 @@ export class User {
 
   @OneToMany(() => AcademicData, (academicData) => academicData.user)
   academicData: AcademicData[];
+
+  @OneToMany(() => AcademicPrograms, (academicProgram) => academicProgram.user)
+  academicProgram: AcademicPrograms[];
 
   @ManyToMany(() => Role, (role) => role.user)
   @JoinTable({

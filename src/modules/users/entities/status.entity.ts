@@ -3,6 +3,9 @@ import { User } from './user.entity';
 import { Questions } from '../../spadmin/entities/questions.entity';
 import { Variable } from '../../spadmin/entities/variable.entity';
 import { Indicator } from '../../spadmin/entities/indicator.entity';
+import { AcademicPrograms } from '../../spadmin/entities/academicPrograms.entity';
+import { Requests } from '../../spadmin/entities/requests.entity';
+import { Stages } from '../../admin/entities/stages.entity';
 
 @Entity()
 export class Status {
@@ -23,4 +26,16 @@ export class Status {
 
   @OneToMany(() => Indicator, (indicator) => indicator.status)
   indicator: Indicator[];
+
+  @OneToMany(
+    () => AcademicPrograms,
+    (academicProgram) => academicProgram.status,
+  )
+  academicProgram: AcademicPrograms[];
+
+  @OneToMany(() => Requests, (request) => request.status)
+  request: Requests[];
+
+  @OneToMany(() => Stages, (stage) => stage.status)
+  stage: Stages[];
 }

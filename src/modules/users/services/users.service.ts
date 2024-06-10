@@ -135,6 +135,16 @@ export class UsersService {
     return this.userRepo.save(user);
   }
 
+  async updateRole(id: number, changes: UpdateUserDto) {
+    const user = await this.findOne(id);
+    if (changes.rolesId) {
+      const roles = await this.roleRepo.findBy({ id: In(changes.rolesId) });
+      user.role = roles;
+    }
+    this.userRepo.merge(user, changes);
+    return this.userRepo.save(user);
+  }
+
   remove(id: number) {
     if (!this.findOne(id)) {
       throw new NotFoundException(`User #${id} not found`);

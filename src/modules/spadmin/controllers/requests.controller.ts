@@ -10,47 +10,44 @@ import {
   UseGuards,
 } from '@nestjs/common';
 
-import { TypeQuestionService } from '../services/typeQuestion.service';
-import {
-  CreateTypeQuestionDto,
-  UpdateTypeQuestionDto,
-} from '../dtos/typeQuestion.dto';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../../auth/guards/roles.guard';
 import { Roles } from '../../auth/decorators/roles.decorator';
 import { Role } from '../../auth/models/roles.model';
+import { RequestsService } from '../services/requests.service';
+import { CreateRequestsDto, UpdateRequestsDto } from '../dtos/requests.dto';
 
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles(Role.SPADMIN)
-@Controller('type-question')
-export class TypeQuestionController {
-  constructor(private typeQuestionService: TypeQuestionService) {}
+@Controller('request')
+export class RequestsController {
+  constructor(private requestsService: RequestsService) {}
 
   @Get()
   findAll() {
-    return this.typeQuestionService.findAll();
+    return this.requestsService.findAll();
   }
 
   @Get(':id')
   get(@Param('id', ParseIntPipe) id: number) {
-    return this.typeQuestionService.findOne(id);
+    return this.requestsService.findOne(id);
   }
 
   @Post()
-  create(@Body() payload: CreateTypeQuestionDto) {
-    return this.typeQuestionService.create(payload);
+  create(@Body() payload: CreateRequestsDto) {
+    return this.requestsService.create(payload);
   }
 
   @Put(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
-    @Body() payload: UpdateTypeQuestionDto,
+    @Body() payload: UpdateRequestsDto,
   ) {
-    return this.typeQuestionService.update(id, payload);
+    return this.requestsService.update(id, payload);
   }
 
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
-    return this.typeQuestionService.remove(+id);
+    return this.requestsService.remove(+id);
   }
 }

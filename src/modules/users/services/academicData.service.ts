@@ -56,14 +56,12 @@ export class AcademicDataService {
       const studyType = await this.studyTypesRepo.findOne({
         where: { id: data.studyTypesID },
       });
-      //console.log(studyType);
       newAcademicData.studyType = studyType;
     }
     if (data.userId) {
       const user = await this.userRepo.findOne({
         where: { id: data.userId },
       });
-      //console.log(user);
       newAcademicData.user = user;
     }
     return this.academicDataRepo.save(newAcademicData);
