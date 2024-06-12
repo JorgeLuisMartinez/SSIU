@@ -36,15 +36,15 @@ import { AcademicData } from './entities/academicData.entity';
 @Module({
   imports: [
     TypeOrmModule.forFeature([
-      User,
-      Role,
-      Gender,
+      AcademicData,
+      CompanySector,
       DniType,
+      EmploymentData,
+      Gender,
+      Role,
       Status,
       StudyTypes,
-      EmploymentData,
-      CompanySector,
-      AcademicData,
+      User,
     ]),
   ],
   controllers: [
@@ -68,6 +68,6 @@ import { AcademicData } from './entities/academicData.entity';
     CompanySectorService,
     AcademicDataService,
   ],
-  exports: [UsersService],
+  exports: [TypeOrmModule, UsersService],
 })
 export class UsersModule {}

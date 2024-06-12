@@ -3,12 +3,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { Status } from '../../users/entities/status.entity';
-import { AcademicPrograms } from '../entities/academicPrograms.entity';
 import { Requests } from '../entities/requests.entity';
 import { CreateRequestsDto, UpdateRequestsDto } from '../dtos/requests.dto';
-import {
-  Stages
-} from '../../admin/entities/stages.entity';
+import { Stages } from '../../admin/entities/stages.entity';
 
 @Injectable()
 export class RequestsService {

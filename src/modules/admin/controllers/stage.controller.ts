@@ -21,7 +21,7 @@ import { CreateStageDto, UpdateStageDto } from '../dtos/stages.dto';
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles(Role.ADMIN)
 @Controller('stage')
-export class AcademicProgramsController {
+export class StageController {
   constructor(private stagesService: StagesService) {}
 
   @Get()
