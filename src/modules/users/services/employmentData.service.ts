@@ -68,14 +68,13 @@ export class EmploymentDataService {
   }
 
   async update(id: number, changes: UpdateEmploymentDataDto) {
-    const employmentData = await this.findOne(id);
+    const employmentData = await this.findByUser(id);
     if (changes.companySectorId) {
       const companySector = await this.companySectorRepo.findOne({
         where: { id: changes.companySectorId },
       });
       employmentData.companySector = companySector;
     }
-
     this.employmentDataRepo.merge(employmentData, changes);
     return this.employmentDataRepo.save(employmentData);
   }

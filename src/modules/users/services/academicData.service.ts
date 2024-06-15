@@ -68,15 +68,14 @@ export class AcademicDataService {
   }
 
   async update(id: number, changes: UpdateAcademicDataDto) {
-    const academicData = await this.findOne(id);
-
+    console.log('entro');
+    const academicData = await this.findByUser(id);
     if (changes.studyTypesID) {
       const studyTypes = await this.studyTypesRepo.findOne({
         where: { id: changes.studyTypesID },
       });
       academicData.studyType = studyTypes;
     }
-
     this.academicDataRepo.merge(academicData, changes);
     return this.academicDataRepo.save(academicData);
   }
