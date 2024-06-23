@@ -23,7 +23,7 @@ import {
 
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles(Role.SPADMIN)
-@Controller('question')
+@Controller('academic-program')
 export class AcademicProgramsController {
   constructor(private academicProgramsService: AcademicProgramsService) {}
 

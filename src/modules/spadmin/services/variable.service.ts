@@ -15,7 +15,7 @@ export class VariableService {
   ) {}
 
   findAll() {
-    return this.variableRepo.find();
+    return this.variableRepo.find({ relations: ['status'] });
   }
 
   findOne(id: number) {
