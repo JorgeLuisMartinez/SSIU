@@ -26,7 +26,7 @@ import {
 @Controller('academic-program')
 export class AcademicProgramsController {
   constructor(private academicProgramsService: AcademicProgramsService) {}
-
+  @Public()
   @Get()
   findAll() {
     return this.academicProgramsService.findAll();

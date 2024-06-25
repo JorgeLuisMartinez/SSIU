@@ -23,7 +23,7 @@ import { Public } from '../../auth/decorators/public.decorator';
 @Controller('indicator')
 export class IndicatorController {
   constructor(private indicatorService: IndicatorService) {}
-
+  @Public()
   @Get()
   findAll() {
     return this.indicatorService.findAll();

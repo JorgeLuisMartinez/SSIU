@@ -24,7 +24,7 @@ import { Public } from '../../auth/decorators/public.decorator';
 export class VariableController {
   constructor(private variableService: VariableService) {}
 
-  @Public()
+  //@Public()
   @Get()
   findAll() {
     return this.variableService.findAll();

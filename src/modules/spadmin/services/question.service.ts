@@ -42,7 +42,7 @@ export class QuestionService {
     if (!indicator) {
       throw new NotFoundException(`indicator #${id} not found`);
     }
-    return this.questionsRepo.findOne({
+    return this.questionsRepo.find({
       where: { indicator: indicator },
       relations: ['typeQuestion', 'status', 'indicator'],
     });

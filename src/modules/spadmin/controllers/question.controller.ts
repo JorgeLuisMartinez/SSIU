@@ -23,7 +23,7 @@ import { Public } from '../../auth/decorators/public.decorator';
 @Controller('question')
 export class QuestionController {
   constructor(private questionService: QuestionService) {}
-
+  @Public()
   @Get()
   findAll() {
     return this.questionService.findAll();

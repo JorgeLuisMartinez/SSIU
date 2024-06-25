@@ -27,7 +27,7 @@ export class IndicatorService {
   async findOne(id: number) {
     const indicator = await this.indicatorRepo.findOne({
       where: { id: id },
-      relations: ['variable'],
+      relations: ['variable', 'status'],
     });
     if (!indicator) {
       throw new NotFoundException(`Indicator #${id} not found`);
@@ -42,7 +42,7 @@ export class IndicatorService {
     if (!variable) {
       throw new NotFoundException(`Variable #${id} not found`);
     }
-    return this.indicatorRepo.findOne({
+    return this.indicatorRepo.find({
       where: { variable: variable },
       relations: ['variable', 'status'],
     });
