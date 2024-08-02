@@ -15,15 +15,15 @@ export class StatusService {
     return this.statusRepo.find();
   }
 
-  findOne(id: number) {
-    const user = this.statusRepo.findOne({
+  async findOne(id: number): Promise<Status> {
+    const status = await this.statusRepo.findOne({
       where: { id: id },
       // relations: ['user'],
     });
-    if (!user) {
+    if (!status) {
       throw new NotFoundException(`Status #${id} not found`);
     }
-    return user;
+    return status;
   }
 
   create(data: CreateStatusDto) {
@@ -31,13 +31,22 @@ export class StatusService {
     return this.statusRepo.save(status);
   }
 
-  async update(id: number, changes: UpdateStatusDto) {
+  async update(id: number, changes: UpdateStatusDto): Promise<Status> {
     const status = await this.statusRepo.findOne({ where: { id: id } });
+    if (!status) {
+      throw new NotFoundException(`Status #${id} not found`);
+    }
     this.statusRepo.merge(status, changes);
     return this.statusRepo.save(status);
   }
 
-  remove(id: number) {
-    return this.statusRepo.delete(id);
+
+  async remove(id: number): Promise<void> {
+    const result = await this.statusRepo.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException(`Status #${id} not found`);
+    }
   }
+
+
 }

@@ -15,15 +15,15 @@ export class GendersService {
     return this.genderRepo.find();
   }
 
-  findOne(id: number) {
-    const user = this.genderRepo.findOne({
+  async findOne(id: number) {
+    const gender = await this.genderRepo.findOne({
       where: { id: id },
       // relations: ['user'],
     });
-    if (!user) {
+    if (!gender) {
       throw new NotFoundException(`Gender #${id} not found`);
     }
-    return user;
+    return gender;
   }
 
   create(data: CreateGenderDto) {
@@ -33,11 +33,18 @@ export class GendersService {
 
   async update(id: number, changes: UpdateGenderDto) {
     const gender = await this.genderRepo.findOne({ where: { id: id } });
+    if (!gender) {
+      throw new NotFoundException(`Gender #${id} not found`);
+    }
     this.genderRepo.merge(gender, changes);
     return this.genderRepo.save(gender);
   }
 
-  remove(id: number) {
-    return this.genderRepo.delete(id);
+  async remove(id: number) {
+    const result = await this.genderRepo.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException(`Gender #${id} not found`);
+    }
+    return result;
   }
 }

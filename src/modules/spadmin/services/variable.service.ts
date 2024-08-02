@@ -18,15 +18,15 @@ export class VariableService {
     return this.variableRepo.find({ relations: ['status'] });
   }
 
-  findOne(id: number) {
-    const user = this.variableRepo.findOne({
+  async findOne(id: number) {
+    const variable = await this.variableRepo.findOne({
       where: { id: id },
       relations: ['status'],
     });
-    if (!user) {
-      throw new NotFoundException(`Dni Type #${id} not found`);
+    if (!variable) {
+      throw new NotFoundException(`Variable #${id} not found`);
     }
-    return user;
+    return variable;
   }
 
   async create(data: CreateVariableDto) {
@@ -42,6 +42,9 @@ export class VariableService {
 
   async update(id: number, changes: UpdateVariableDto) {
     const variable = await this.variableRepo.findOne({ where: { id: id } });
+    if (!variable) {
+      throw new NotFoundException(`Variable #${id} not found`);
+    }
     if (changes.statusId) {
       const status = await this.statusRepo.findOne({
         where: { id: changes.statusId },
@@ -51,6 +54,7 @@ export class VariableService {
     this.variableRepo.merge(variable, changes);
     return this.variableRepo.save(variable);
   }
+
 
   async remove(id: number) {
     const variable = await this.findOne(id);

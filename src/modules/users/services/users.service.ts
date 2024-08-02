@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, In } from 'typeorm';
 import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
+import { DeleteResult } from 'typeorm';
 
 import { User } from '../entities/user.entity';
 import { Gender } from '../entities/gender.entity';
@@ -29,7 +30,7 @@ export class UsersService {
     });
   }
 
-  async findOne(id: number) {
+  async findOne(id: number): Promise<User> {
     const user = await this.userRepo.findOne({
       where: { id: id },
       relations: ['role', 'gender', 'dni_type', 'status'],
@@ -80,6 +81,7 @@ export class UsersService {
       10,
     );
     newUser.password = hashPassword;
+
     if (data.genderId) {
       const gender = await this.genderRepo.findOne({
         where: { id: data.genderId },
@@ -108,16 +110,13 @@ export class UsersService {
 
   async update(id: number, changes: UpdateUserDto) {
     const user = await this.findOne(id);
+
     if (changes.genderId) {
-      const gender = await this.genderRepo.findOne({
-        where: { id: changes.genderId },
-      });
+      const gender = await this.genderRepo.findOne({ where: { id: changes.genderId } });
       user.gender = gender;
     }
     if (changes.dniTypeId) {
-      const dniType = await this.dniTypeRepo.findOne({
-        where: { id: changes.dniTypeId },
-      });
+      const dniType = await this.dniTypeRepo.findOne({ where: { id: changes.dniTypeId } });
       user.dni_type = dniType;
     }
     if (changes.rolesId) {
@@ -125,15 +124,15 @@ export class UsersService {
       user.role = roles;
     }
     if (changes.statusId) {
-      const status = await this.statusRepo.findOne({
-        where: { id: changes.statusId },
-      });
+      const status = await this.statusRepo.findOne({ where: { id: changes.statusId } });
       user.status = status;
     }
+
 
     this.userRepo.merge(user, changes);
     return this.userRepo.save(user);
   }
+
 
   async updateRole(id: number, changes: UpdateUserDto) {
     const user = await this.findOne(id);
@@ -145,10 +144,11 @@ export class UsersService {
     return this.userRepo.save(user);
   }
 
-  remove(id: number) {
-    if (!this.findOne(id)) {
-      throw new NotFoundException(`User #${id} not found`);
+  async remove(id: number): Promise<DeleteResult> {
+    const result = await this.userRepo.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException(`User with ID ${id} not found`);
     }
-    return this.userRepo.delete(id);
+    return result;
   }
 }

@@ -13,15 +13,15 @@ export class RolesService {
     return this.roleRepo.find();
   }
 
-  findOne(id: number) {
-    const user = this.roleRepo.findOne({
+  async findOne(id: number): Promise<Role> {
+    const role = await this.roleRepo.findOne({
       where: { id: id },
       // relations: ['user'],
     });
-    if (!user) {
+    if (!role) {
       throw new NotFoundException(`Role #${id} not found`);
     }
-    return user;
+    return role;
   }
 
   create(data: CreateRolesDto) {
@@ -29,13 +29,20 @@ export class RolesService {
     return this.roleRepo.save(role);
   }
 
-  async update(id: number, changes: UpdateRolesDto) {
+  async update(id: number, changes: UpdateRolesDto): Promise<Role> {
     const role = await this.roleRepo.findOne({ where: { id: id } });
+    if (!role) {
+      throw new NotFoundException(`Role #${id} not found`);
+    }
     this.roleRepo.merge(role, changes);
     return this.roleRepo.save(role);
   }
 
-  remove(id: number) {
-    return this.roleRepo.delete(id);
+  async remove(id: number): Promise<void> {
+    const result = await this.roleRepo.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException(`Role #${id} not found`);
+    }
   }
+
 }

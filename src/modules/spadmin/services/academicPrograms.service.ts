@@ -53,10 +53,16 @@ export class AcademicProgramsService {
     if (!user) {
       throw new NotFoundException(`User #${id} not found`);
     }
-    return this.academicProgramsRepo.findOne({
+    const academicProgram = await this.academicProgramsRepo.findOne({
       where: { user: user },
       relations: ['status', 'user'],
     });
+
+    if (!academicProgram) {
+      throw new NotFoundException(`AcademicProgram for User #${id} not found`);
+    }
+
+    return academicProgram;
   }
 
   async create(data: CreateAcademicProgramsDto) {

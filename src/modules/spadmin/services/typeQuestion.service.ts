@@ -38,7 +38,9 @@ export class TypeQuestionService {
     const typeQuestion = await this.typeQuestionRepo.findOne({
       where: { id: id },
     });
-
+    if (!typeQuestion) {
+      throw new NotFoundException(`TypeQuestion #${id} not found`);
+    }
     this.typeQuestionRepo.merge(typeQuestion, changes);
     return this.typeQuestionRepo.save(typeQuestion);
   }

@@ -68,8 +68,10 @@ export class AcademicDataService {
   }
 
   async update(id: number, changes: UpdateAcademicDataDto) {
-    console.log('entro');
-    const academicData = await this.findByUser(id);
+    const academicData = await this.findOne(id);
+    if (!academicData) {
+      throw new NotFoundException(`AcademicData #${id} not found`);
+    }
     if (changes.studyTypesID) {
       const studyTypes = await this.studyTypesRepo.findOne({
         where: { id: changes.studyTypesID },
@@ -80,10 +82,13 @@ export class AcademicDataService {
     return this.academicDataRepo.save(academicData);
   }
 
-  remove(id: number) {
-    if (!this.findOne(id)) {
+
+  async remove(id: number) {
+    const academicData = await this.findOne(id);
+    if (!academicData) {
       throw new NotFoundException(`AcademicData #${id} not found`);
     }
     return this.academicDataRepo.delete(id);
   }
+
 }

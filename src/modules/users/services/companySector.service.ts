@@ -19,17 +19,17 @@ export class CompanySectorService {
     return this.companySectorRepo.find();
   }
 
-  findOne(id: number) {
-    const user = this.companySectorRepo.findOne({
+  async findOne(id: number) {
+    const companySector = await this.companySectorRepo.findOne({
       where: { id: id },
     });
-    if (!user) {
-      throw new NotFoundException(`Dni Type #${id} not found`);
+    if (!companySector) {
+      throw new NotFoundException(`CompanySector #${id} not found`);
     }
-    return user;
+    return companySector;
   }
 
-  create(data: CreateCompanySectorDto) {
+  async create(data: CreateCompanySectorDto) {
     const newCompanySector = this.companySectorRepo.create(data);
     return this.companySectorRepo.save(newCompanySector);
   }
@@ -38,11 +38,20 @@ export class CompanySectorService {
     const companySector = await this.companySectorRepo.findOne({
       where: { id: id },
     });
+    if (!companySector) {
+      throw new NotFoundException(`CompanySector #${id} not found`);
+    }
     this.companySectorRepo.merge(companySector, changes);
     return this.companySectorRepo.save(companySector);
   }
 
-  remove(id: number) {
+  async remove(id: number) {
+    const companySector = await this.companySectorRepo.findOne({
+      where: { id: id },
+    });
+    if (!companySector) {
+      throw new NotFoundException(`CompanySector #${id} not found`);
+    }
     return this.companySectorRepo.delete(id);
   }
 }

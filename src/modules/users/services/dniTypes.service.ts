@@ -15,10 +15,9 @@ export class DniTypesService {
     return this.dniTypeRepo.find();
   }
 
-  findOne(id: number) {
-    const user = this.dniTypeRepo.findOne({
+async findOne(id: number) {
+    const user = await this.dniTypeRepo.findOne({
       where: { id: id },
-      // relations: ['user'],
     });
     if (!user) {
       throw new NotFoundException(`Dni Type #${id} not found`);
@@ -33,11 +32,19 @@ export class DniTypesService {
 
   async update(id: number, changes: UpdateDniTypeDto) {
     const dniType = await this.dniTypeRepo.findOne({ where: { id: id } });
+    if (!dniType) {
+      throw new NotFoundException(`Dni Type #${id} not found`);
+    }
     this.dniTypeRepo.merge(dniType, changes);
     return this.dniTypeRepo.save(dniType);
   }
 
-  remove(id: number) {
+  async remove(id: number) {
+    const dniType = await this.dniTypeRepo.findOne({ where: { id: id } });
+    if (!dniType) {
+      throw new NotFoundException(`Dni Type #${id} not found`);
+    }
     return this.dniTypeRepo.delete(id);
   }
+
 }

@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { EmploymentDataService } from './employmentData.service';
+import { EmploymentDataService } from '../../../modules/users/services/employmentData.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { EmploymentData } from '../entities/employmentData.entity';
-import { User } from '../entities/user.entity';
-import { CompanySector } from '../entities/companySector.entity';
+import { EmploymentData } from '../../../modules/users/entities/employmentData.entity';
+import { User } from '../../../modules/users/entities/user.entity';
+import { CompanySector } from '../../../modules/users/entities/companySector.entity';
 import { Repository } from 'typeorm';
 import { NotFoundException } from '@nestjs/common';
 
@@ -19,27 +19,34 @@ describe('EmploymentDataService', () => {
         EmploymentDataService,
         {
           provide: getRepositoryToken(EmploymentData),
-          useClass: Repository,
+          useValue: {
+            find: jest.fn().mockResolvedValue([]),
+            findOne: jest.fn(),
+            create: jest.fn(),
+            save: jest.fn(),
+            merge: jest.fn(),
+            delete: jest.fn(),
+          },
         },
         {
           provide: getRepositoryToken(User),
-          useClass: Repository,
+          useValue: {
+            findOne: jest.fn(),
+          },
         },
         {
           provide: getRepositoryToken(CompanySector),
-          useClass: Repository,
+          useValue: {
+            findOne: jest.fn(),
+          },
         },
       ],
     }).compile();
 
     service = module.get<EmploymentDataService>(EmploymentDataService);
-    employmentDataRepo = module.get<Repository<EmploymentData>>(
-      getRepositoryToken(EmploymentData),
-    );
+    employmentDataRepo = module.get<Repository<EmploymentData>>(getRepositoryToken(EmploymentData));
     userRepo = module.get<Repository<User>>(getRepositoryToken(User));
-    companySectorRepo = module.get<Repository<CompanySector>>(
-      getRepositoryToken(CompanySector),
-    );
+    companySectorRepo = module.get<Repository<CompanySector>>(getRepositoryToken(CompanySector));
   });
 
   it('should be defined', () => {
@@ -49,9 +56,7 @@ describe('EmploymentDataService', () => {
   describe('findAll', () => {
     it('should return an array of employment data', async () => {
       const employmentDataArray = [{ id: 1, user: {}, companySector: {} }];
-      jest
-        .spyOn(employmentDataRepo, 'find')
-        .mockResolvedValue(employmentDataArray as any);
+      jest.spyOn(employmentDataRepo, 'find').mockResolvedValue(employmentDataArray as any);
       expect(await service.findAll()).toBe(employmentDataArray);
     });
   });
@@ -59,9 +64,7 @@ describe('EmploymentDataService', () => {
   describe('findOne', () => {
     it('should return a single employment data', async () => {
       const employmentData = { id: 1, user: {}, companySector: {} };
-      jest
-        .spyOn(employmentDataRepo, 'findOne')
-        .mockResolvedValue(employmentData as any);
+      jest.spyOn(employmentDataRepo, 'findOne').mockResolvedValue(employmentData as any);
       expect(await service.findOne(1)).toBe(employmentData);
     });
 
@@ -76,9 +79,7 @@ describe('EmploymentDataService', () => {
       const user = { id: 1 };
       const employmentData = { id: 1, user: user, companySector: {} };
       jest.spyOn(userRepo, 'findOne').mockResolvedValue(user as any);
-      jest
-        .spyOn(employmentDataRepo, 'findOne')
-        .mockResolvedValue(employmentData as any);
+      jest.spyOn(employmentDataRepo, 'findOne').mockResolvedValue(employmentData as any);
       expect(await service.findByUser(1)).toBe(employmentData);
     });
   });
@@ -87,16 +88,10 @@ describe('EmploymentDataService', () => {
     it('should create and return new employment data', async () => {
       const data = { userId: 1, companySectorId: 1 };
       const newEmploymentData = { id: 1, user: {}, companySector: {} };
-      jest
-        .spyOn(employmentDataRepo, 'create')
-        .mockReturnValue(newEmploymentData as any);
-      jest
-        .spyOn(employmentDataRepo, 'save')
-        .mockResolvedValue(newEmploymentData as any);
+      jest.spyOn(employmentDataRepo, 'create').mockReturnValue(newEmploymentData as any);
+      jest.spyOn(employmentDataRepo, 'save').mockResolvedValue(newEmploymentData as any);
       jest.spyOn(userRepo, 'findOne').mockResolvedValue({ id: 1 } as any);
-      jest
-        .spyOn(companySectorRepo, 'findOne')
-        .mockResolvedValue({ id: 1 } as any);
+      jest.spyOn(companySectorRepo, 'findOne').mockResolvedValue({ id: 1 } as any);
       expect(await service.create(data as any)).toBe(newEmploymentData);
     });
   });
@@ -105,30 +100,18 @@ describe('EmploymentDataService', () => {
     it('should update and return updated employment data', async () => {
       const changes = { companySectorId: 1 };
       const existingEmploymentData = { id: 1, user: {}, companySector: {} };
-      jest
-        .spyOn(service, 'findOne')
-        .mockResolvedValue(existingEmploymentData as any);
-      jest
-        .spyOn(employmentDataRepo, 'save')
-        .mockResolvedValue(existingEmploymentData as any);
-      jest
-        .spyOn(companySectorRepo, 'findOne')
-        .mockResolvedValue({ id: 1 } as any);
-      jest
-        .spyOn(employmentDataRepo, 'merge')
-        .mockReturnValue(existingEmploymentData as any);
-      expect(await service.update(1, changes as any)).toBe(
-        existingEmploymentData,
-      );
+      jest.spyOn(service, 'findByUser').mockResolvedValue(existingEmploymentData as any);
+      jest.spyOn(companySectorRepo, 'findOne').mockResolvedValue({ id: 1 } as any);
+      jest.spyOn(employmentDataRepo, 'merge').mockReturnValue(existingEmploymentData as any);
+      jest.spyOn(employmentDataRepo, 'save').mockResolvedValue(existingEmploymentData as any);
+      expect(await service.update(1, changes as any)).toBe(existingEmploymentData);
     });
   });
 
   describe('remove', () => {
     it('should remove employment data and return void', async () => {
       const existingEmploymentData = { id: 1, user: {}, companySector: {} };
-      jest
-        .spyOn(service, 'findOne')
-        .mockResolvedValue(existingEmploymentData as any);
+      jest.spyOn(service, 'findOne').mockResolvedValue(existingEmploymentData as any);
       jest.spyOn(employmentDataRepo, 'delete').mockResolvedValue({} as any);
       await expect(service.remove(1)).resolves.toBeUndefined();
     });
