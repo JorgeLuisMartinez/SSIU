@@ -16,11 +16,17 @@ export class AuthService {
   async validateUser(email: string, password: string) {
     const user = await this.userService.findByEmail(email);
     if (user) {
-      const isMatch = await bcrypt.compare(password, user.password);
-      if (isMatch) {
-        return user;
+      if (user.status.id == 1) {
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (isMatch) {
+          return user;
+        } else {
+          return { error: 'La contraseña proporcionada es incorrecta' };
+        }
       } else {
-        return { error: 'La contraseña proporcionada es incorrecta' };
+        return {
+          error: 'El Usuario no esta Activo, por favor registrate primero',
+        };
       }
     } else {
       return { error: 'El correo electrónico no está registrado' };
